@@ -1,0 +1,16 @@
+{
+  "$schema": "http://apicast.io/policy-v1/schema#manifest#",
+  "name": "GUID Policy",
+  "summary": "This is the GUID policy.",
+  "description": "This policy is GUID policy that adds an GUID value to the informed header.",
+  "version": "0.1",
+  "configuration": {
+    "type": "object",
+    "properties": {
+      "header_name": {
+        "description": "Header Name",
+        "type": "string"
+      }
+    }
+  }
+}

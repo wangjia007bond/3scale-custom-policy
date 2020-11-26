@@ -36,6 +36,7 @@ objects:
         from:
           kind: ImageStreamTag
           name: 'apicast-gateway-rhel8:${AMP_RELEASE}'
+          namespace: openshift
 
 - apiVersion: v1
   kind: BuildConfig
@@ -75,12 +76,12 @@ objects:
         FROM scratch
         COPY . src
         USER root
-
     strategy:
       dockerStrategy:
         from:
           kind: ImageStreamTag
-          name: 'amp-apicast:${AMP_RELEASE}'
+          name: 'apicast-gateway-rhel8:${AMP_RELEASE}'
+          namespace: openshift
       type: Docker
     triggers:
       - type: ConfigChange
