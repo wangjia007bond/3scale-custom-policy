@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: Template
 metadata:
-  name: "3scale-custom-policy"
-message: "3scale Custom Policy"
+  name: "apicast-guid-policy"
+message: "3scale GUID Policy"
 objects:
 
 - apiVersion: v1
@@ -11,7 +11,7 @@ objects:
     annotations:
     labels:
       app: apicast
-    name: apicast-policy
+    name: apicast-guid-policy
 
 - apiVersion: v1
   kind: BuildConfig
@@ -19,23 +19,23 @@ objects:
     annotations:
     labels:
       app: apicast
-    name: 3scale-custom-policy
+    name: apicast-guid-policy
   spec:
     output:
       to:
         kind: ImageStreamTag
-        name: apicast-policy:latest
+        name: apicast-guid-policy:guid
     source:
       git:
         uri: https://github.com/mgohashi/3scale-custom-policy.git
         ref: 'master'
       type: Git
     strategy:
-      type: Source
       sourceStrategy:
         from:
           kind: ImageStreamTag
-          name: 'apicast-gateway-rhel8:${AMP_RELEASE}'
+          #name: 'amp-apicast:2.9'
+          name: 'apicast-gateway-rhel8:3scale2.9.1'
           namespace: openshift
 
 - apiVersion: v1
@@ -44,13 +44,13 @@ objects:
     annotations:
     labels:
       app: apicast
-    name: apicast-custom-policy
+    name: apicast-custom
   spec:
     nodeSelector: null
     output:
       to:
         kind: ImageStreamTag
-        name: 'amp-apicast:latest'
+        name: 'amp-apicast:2.9'
     postCommit:
       args:
         - '--test'
@@ -63,7 +63,7 @@ objects:
       images:
         - from:
             kind: ImageStreamTag
-            name: 'apicast-policy:latest'
+            name: 'apicast-guid-policy:guid'
           paths:
             # copy policy source code into the new image
             - destinationDir: policies
@@ -76,11 +76,12 @@ objects:
         FROM scratch
         COPY . src
         USER root
+
     strategy:
       dockerStrategy:
         from:
           kind: ImageStreamTag
-          name: 'apicast-gateway-rhel8:${AMP_RELEASE}'
+          name: 'apicast-gateway-rhel8:3scale2.9.1'
           namespace: openshift
       type: Docker
     triggers:
@@ -89,5 +90,5 @@ objects:
 
 parameters:
 - name: AMP_RELEASE
-  description: AMP Version (eg. 3scale2.9.1)
-  value: 3scale2.9.1
+  description: AMP Version (eg. 2.9)
+  value: '2.9' 

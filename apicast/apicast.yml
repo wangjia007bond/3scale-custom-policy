@@ -55,7 +55,7 @@ items:
             value: status
           - name: OPENSSL_VERIFY
             value: "false"
-          image: image-registry.openshift-image-registry.svc:5000/3scale29-custom-policy/apicast-policy
+          image: image-registry.openshift-image-registry.svc:5000/3scale29/amp-apicast
           imagePullPolicy: IfNotPresent
           livenessProbe:
             httpGet:

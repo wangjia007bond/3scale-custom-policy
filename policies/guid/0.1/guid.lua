@@ -5,7 +5,11 @@ local new = _M.new
 
 function _M.new(config)
   local self = new(config)
-  self.header_name = config.header_name or "GUID"
+  if config.header_name == nil or config.header_name == '' then
+    self.header_name = "GUID"
+  else
+    self.header_name = config.header_name
+  end
   return self
 end
 
