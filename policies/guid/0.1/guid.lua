@@ -5,16 +5,16 @@ local new = _M.new
 
 function _M.new(config)
   local self = new(config)
-  if config.header_name == nil or config.header_name == '' then
-    self.header_name = "GUID"
-  else
-    self.header_name = config.header_name
-  end
+
+  self.header_name = config.header_name
+
   return self
 end
 
 function _M:rewrite()
-  set_request_header(self.header_name, "3f596908-6822-402a-bf3c-e1679f188d56")
+  local header_name = config.header_name or "GUID"
+
+  set_request_header(header_name, "3f596908-6822-402a-bf3c-e1679f188d56")
 end
 
 local function set_request_header(header_name, value)
