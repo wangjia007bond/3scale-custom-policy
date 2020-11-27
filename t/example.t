@@ -19,7 +19,7 @@ The module does not crash without configuration.
     {
       "proxy": {
         "policy_chain": [
-          { "name": "example", "version": "0.1" },
+          { "name": "guid", "version": "0.1" },
           { "name": "apicast.policy.echo", "configuration": { } }
         ]
       }

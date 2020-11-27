@@ -5,17 +5,12 @@ local new = _M.new
 
 function _M.new(config)
   local self = new(config)
-  self.config = init_config(config)
+  self.header_name = config.header_name or "GUID"
   return self
 end
 
 function _M:rewrite()
-  set_request_header(self.config.header_name, "3f596908-6822-402a-bf3c-e1679f188d56")
-end
-
-local function init_config(config)
-  local res = config or { header_name = "GUID" }
-  return res
+  set_request_header(self.header_name, "3f596908-6822-402a-bf3c-e1679f188d56")
 end
 
 local function set_request_header(header_name, value)
