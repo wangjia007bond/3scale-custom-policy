@@ -1,7 +1,5 @@
 # APIcast GUID Policy
 
-This policy is a policy to add a GUID into the header for APIcast.
-
 ## Pre-requisites
 
 The following pre-requisites need to be verified before proceeding with the installation.
@@ -11,16 +9,16 @@ The following pre-requisites need to be verified before proceeding with the inst
 
 ## Overview
 
-This policy adds a new header attribute with a GUID or UUID to the request before sending to a Backend.
+This policy can be used to add a GUID into the header for APIcast and trace the request from the gateway to the backend.
 
 There are two builds that we need to keep in mind.
 
 - `apicast-guid-policy`: This first runs the default source to image scripts and copies the contents of the [policies](policies) folder.
 - `apicast-custom`: Takes the output of the first build, runs copies the contents to the right place, also runs some tests.
 
-So, both of them are required to run.
+So, both of them are required to run in the same order that it is going to be shown later.
 
-The API Manager get's the list of policies including the custom ones from the API Cast that is being referenced from the `APICAST_REGISTRY_URL`. So, don't forget to update the value of this environmnet variable to point the same API Cast instance that you are using to deploy your image. In this procedure we will be deploying the policies to the operator provisioned API Casts.
+The API Manager gets the list of policies including the custom ones from the API Cast that is being referenced from the `APICAST_REGISTRY_URL`. So, don't forget to update the value of this environmnet variable to point the same API Cast instance that you are using to deploy your image. In this procedure we will be deploying the policies in both operator provisioned API Casts.
 
 ---
 
@@ -37,7 +35,7 @@ If you are taking this as a reference to develop your own policy then don't forg
 ---
 
 Parameters of this policy:
-- Header name: If provided, if will use the deafult header name which is `GUID`.
+- Header name: If not provided, it will use the deafult header name which is `GUID`.
 
 ## Installation on OpenShift
 
@@ -97,8 +95,8 @@ Once you deploy the new image, you should see the new policy appearing in the li
 
 1. Log into your Admin portal;
 2. From the dropdown menu on the top Access your API or Service and click on `Integration` > `Policies`;
-3. Click on the link `Add policy`;
-4. Click on the `GUID Policy`:
+3. Then click on the link `Add policy`;
+4. Then click on the `GUID Policy`:
    
    ![](docs/guid-policy.png)
 5. Move the new policy to before the default **API Cast** policy;
@@ -136,3 +134,4 @@ Some attributes have been omitted for brevity.
     "uuid": "89f9dca6-c85d-4044-a3ff-4a3d4e32c4e2"
 }
 ```
+
