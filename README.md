@@ -47,8 +47,6 @@ Parameters of this policy:
 
    ```shell
    3SCALE_NAMESPACE="the name of your 3scale namespace"
-   3SCALE_SERVICE_TOKEN="your 3scale service token"
-   3SCALE_ADMIN_PORTAL_ENDPOINT="your admin portal endpoint"
    GIT_REPO="your GIT repository containing this policy"
    ```
 
@@ -71,13 +69,7 @@ Parameters of this policy:
    oc -n openshift import-image amp-apicast:3scale2.9.1 --from=registry.redhat.io/3scale-amp2/apicast-gateway-rhel8:3scale2.9.1 --confirm
    ```
 
-5. Create the secret for the apicast.
-
-   ```shell
-   oc -n $3SCALE_NAMESPACE create secret generic apicast-configuration-url-secret --from-literal=password=https://$3SCALE_SERVICE_TOKEN@$3SCALE_ADMIN_PORTAL_ENDPOINT --type=kubernetes.io/basic-auth
-   ```
-
-6. To install the build configs on OpenShift you can use provided template:
+5. To install the build configs on OpenShift you can use provided template:
 
    ```shell
    oc -n $3SCALE_NAMESPACE new-app -f openshift.yml -p GIT_REPO=$GIT_REPO -o yaml | oc apply -f -
