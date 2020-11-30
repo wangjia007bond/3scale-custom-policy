@@ -39,7 +39,7 @@ If you are taking this as a reference to develop your own policy then don't forg
 Parameters of this policy:
 - Header name: If provided, if will use the deafult header name which is `GUID`.
 
-## Installation OpenShift
+## Installation on OpenShift
 
 1. Open a terminal window and run the following commands from within the cloned version of this repository root folder.
 
@@ -80,7 +80,7 @@ Parameters of this policy:
 6. To install the build configs on OpenShift you can use provided template:
 
    ```shell
-   oc -n $3SCALE_NAMESPACE new-app -f openshift.yml -o yaml -p GIT_REPO=$GIT_REPO | oc apply -f -
+   oc -n $3SCALE_NAMESPACE new-app -f openshift.yml -p GIT_REPO=$GIT_REPO -o yaml | oc apply -f -
    ```
 
 ## Starting the build
@@ -108,9 +108,12 @@ Once you deploy the new image, you should see the new policy appearing in the li
 3. Click on the link `Add policy`;
 4. Click on the `GUID Policy`:
    
-   ![](docs/guid-police.png)
+   ![](docs/guid-policy.png)
 5. Move the new policy to before the default **API Cast** policy;
 6. Click on the **GUID Policy** again and you should see its properties;
+
+   ![](docs/guid-policy-settings.png)
+
 7. There you can change the header name to be used to add the **UUID** value;
 8. Once you finish changing the settings, you can click on **Update policy** button and then `Update Policy Chain`;
 9. Go to configuration and promote your changes to staging;

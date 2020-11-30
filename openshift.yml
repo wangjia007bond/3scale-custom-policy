@@ -27,7 +27,7 @@ objects:
         name: apicast-guid-policy:guid
     source:
       git:
-        uri: {{GIT_REPO}}
+        uri: ${GIT_REPO}
         ref: 'master'
       type: Git
     strategy:
@@ -49,7 +49,7 @@ objects:
     output:
       to:
         kind: ImageStreamTag
-        name: 'amp-apicast:{{AMP_RELEASE}}'
+        name: 'amp-apicast:${AMP_RELEASE}'
     postCommit:
       args:
         - '--test'
