@@ -14,7 +14,16 @@ end
 function _M:rewrite()
   local header_name = self.header_name or 'GUID'
 
-  ngx.req.set_header(header_name, '3f596908-6822-402a-bf3c-e1679f188d56')
+  ngx.req.set_header(header_name, uuid())
+end
+
+local random = math.random
+local function uuid()
+    local template ='xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+    return string.gsub(template, '[xy]', function (c)
+        local v = (c == 'x') and random(0, 0xf) or random(8, 0xb)
+        return string.format('%x', v)
+    end)
 end
 
 return _M
