@@ -27,14 +27,13 @@ objects:
         name: apicast-guid-policy:guid
     source:
       git:
-        uri: https://github.com/mgohashi/3scale-custom-policy.git
+        uri: {{GIT_REPO}}
         ref: 'master'
       type: Git
     strategy:
       sourceStrategy:
         from:
           kind: ImageStreamTag
-          #name: 'amp-apicast:2.9'
           name: 'apicast-gateway-rhel8:3scale2.9.1'
           namespace: openshift
 
@@ -50,7 +49,7 @@ objects:
     output:
       to:
         kind: ImageStreamTag
-        name: 'amp-apicast:2.9'
+        name: 'amp-apicast:{{AMP_RELEASE}}'
     postCommit:
       args:
         - '--test'
@@ -90,5 +89,8 @@ objects:
 
 parameters:
 - name: AMP_RELEASE
-  description: AMP Version (eg. 2.9)
+  description: The destination tag of your AMP release (eg. 2.9)
   value: '2.9' 
+- name: GIT_REPO
+  description: GIT REPO
+  required: true
