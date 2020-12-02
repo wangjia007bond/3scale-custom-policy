@@ -23,7 +23,9 @@ end
 function _M:rewrite()
   local header_name = self.header_name or 'GUID'
 
-  ngx.req.set_header(header_name, uuid())
+  if req_headers[header_name] == nil then
+    ngx.req.set_header(header_name, uuid())
+  end
 end
 
 return _M
