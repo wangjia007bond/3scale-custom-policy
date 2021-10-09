@@ -1,0 +1,1 @@
+return require('custom_role_check')
