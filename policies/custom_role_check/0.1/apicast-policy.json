@@ -4,7 +4,7 @@
   "summary": "Adds role check.",
   "description": [
     "This policy adds role check with a custom format\n",
-    "This policy verifies realm roles and client roles in the access token."
+    "This policy verifies roles in the access token."
   ],
   "version": "0.1",
   "configuration": {
@@ -28,9 +28,9 @@
         "items": {
           "type": "object",
           "properties": {
-            "realm_roles": {
+            "roles": {
               "type": "array",
-              "description": "Realm roles",
+              "description": "Roles",
               "items": {
                 "type": "object",
                 "properties": {
@@ -40,31 +40,6 @@
                   },
                   "name_type": {
                     "description": "How to evaluate 'name'",
-                    "$ref": "#/definitions/value_type"
-                  }
-                }
-              }
-            },
-            "client_roles": {
-              "type": "array",
-              "description": "Client roles",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "description": "Name of the role"
-                  },
-                  "name_type": {
-                    "description": "How to evaluate 'name'",
-                    "$ref": "#/definitions/value_type"
-                  },
-                  "client": {
-                    "type": "string",
-                    "description": "Client of the role."
-                  },
-                  "client_type": {
-                    "description": "How to evaluate 'client'",
                     "$ref": "#/definitions/value_type"
                   }
                 }

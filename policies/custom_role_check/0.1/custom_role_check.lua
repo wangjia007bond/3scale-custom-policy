@@ -1,46 +1,19 @@
 --- Custom Role Check Policy
--- This policy verifies the realm roles and the client roles in the JWT.
+-- This policy verifies the roles in the JWT.
 --
 --
--- When you specify the realm roles, the JWT includes them as follows:
+-- When you specify the roles, the JWT includes them as follows:
 --
 -- {
 --     "roles": [
---       "<realm_role_A>", "<realm_role_B>"
+--       "<role_A>", "<role_B>"
 --     ]
 -- }
 --
--- And you need to specify the "realm_roles" in this policy as follows:
+-- And you need to specify the "roles" in this policy as follows:
 --
--- "realm_roles": [
---   { "name": "<realm_role_A>" }, { "name": "<realm_role_B>" }
--- ]
---
---
--- When you specify the client roles, the JWT includes them as follows:
---
--- {
---   "resource_access": {
---     "<client_A>": {
---       "roles": [
---         "<client_role_A>", "<client_role_B>"
---       ]
---     },
---     "<client_B>": {
---       "roles": [
---         "<client_role_A>", "<client_role_B>"
---       ]
---     }
---   }
--- }
---
--- And you need to specify the "client_roles" in this policy as follows:
---
--- "client_roles": [
---   { "name": "<client_role_A>", "client": "<client_A>" },
---   { "name": "<client_role_B>", "client": "<client_A>" },
---   { "name": "<client_role_A>", "client": "<client_B>" },
---   { "name": "<client_role_B>", "client": "<client_B>" }
+-- "roles": [
+--   { "name": "<role_A>" }, { "name": "<role_B>" }
 -- ]
 
 local policy = require('apicast.policy')
@@ -63,20 +36,10 @@ end
 local function build_scopes(scopes)
   for _, scope in ipairs(scopes) do
 
-    if scope.realm_roles then
-      for _, realm_role in ipairs(scope.realm_roles) do
-        realm_role.template_string = create_template(
-          realm_role.name, realm_role.name_type)
-      end
-    end
-
-    if scope.client_roles then
-      for _, client_role in ipairs(scope.client_roles) do
-        client_role.name_template_string = create_template(
-          client_role.name, client_role.name_type)
-
-        client_role.client_template_string = create_template(
-          client_role.client, client_role.client_type)
+    if scope.roles then
+      for _, role in ipairs(scope.roles) do
+        role.template_string = create_template(
+          role.name, role.name_type)
       end
     end
 
@@ -108,10 +71,10 @@ local function check_roles_in_token(role, roles_in_token)
   return false
 end
 
-local function match_realm_roles(scope, context)
-  if not scope.realm_roles then return true end
+local function match_roles(scope, context)
+  if not scope.roles then return true end
 
-  for _, role in ipairs(scope.realm_roles) do
+  for _, role in ipairs(scope.roles) do
     if not context.jwt.roles then
       return false
     end
@@ -119,32 +82,6 @@ local function match_realm_roles(scope, context)
     local name = role.template_string:render(context)
 
     if not check_roles_in_token(name, context.jwt.roles or {}) then
-      return false
-    end
-  end
-
-  return true
-end
-
-local function match_client_roles(scope, context)
-  if not scope.client_roles then return true end
-
-  for _, role in ipairs(scope.client_roles) do
-    if not context.jwt.resource_access then
-      return false
-    end
-
-    local client = role.client_template_string:render(context)
-    local client_in_token = context.jwt.resource_access[client]
-
-    if not client_in_token then
-      ngx.log(ngx.DEBUG, "Client '", client, "' was not found in the access token.")
-      return false
-    end
-
-    local name = role.name_template_string:render(context)
-
-    if not check_roles_in_token(name, client_in_token.roles or {}) then
       return false
     end
   end
@@ -166,7 +103,7 @@ local function validate_scope_access(scope, context, uri, request_method)
     })
 
     if mapping_rule:matches(request_method, uri) then
-      if match_realm_roles(scope, context) and match_client_roles(scope, context) then
+      if match_roles(scope, context) then
         return true
       end
     end
