@@ -51,7 +51,7 @@ Parameters of this policy:
 3. Access the current 3scale namespace for your API casts.
 
    ```shell
-   oc project $3SCALE_NAMESPACE
+   oc project 3scale
    ```
 
 4. Create the image stream of the apicast.
@@ -70,7 +70,7 @@ Parameters of this policy:
 5. To install the build configs on OpenShift you can use provided template:
 
    ```shell
-   oc -n $3SCALE_NAMESPACE new-app -f openshift.yml -p GIT_REPO=$GIT_REPO -o yaml | oc apply -f -
+   oc -n 3scale new-app -f openshift.yml -p GIT_REPO=$GIT_REPO -o yaml | oc apply -f -
    ```
 
 ## Starting the build
@@ -78,13 +78,13 @@ Parameters of this policy:
 1. To start the first build run the following command:
 
    ```shell
-   oc -n $3SCALE_NAMESPACE start-build apicast-guid-policy --wait --follow
+   oc -n 3scale start-build apicast-guid-policy --wait --follow
    ```
 
 2. To start the second build run the following command:
 
    ```shell
-   oc -n $3SCALE_NAMESPACE start-build apicast-custom --wait --follow
+   oc -n 3scale start-build apicast-custom --wait --follow
    ```
 
 If you didn't change the output image of the second build, you should see the API Casts being redeployed.
