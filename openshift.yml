@@ -34,7 +34,7 @@ objects:
       sourceStrategy:
         from:
           kind: ImageStreamTag
-          name: 'apicast-gateway-rhel8:3scale2.10'
+          name: 'apicast-gateway-rhel8:3scale2.11'
           namespace: openshift
 
 - apiVersion: v1
@@ -80,7 +80,7 @@ objects:
       dockerStrategy:
         from:
           kind: ImageStreamTag
-          name: 'apicast-gateway-rhel8:3scale2.10'
+          name: 'apicast-gateway-rhel8:3scale2.11'
           namespace: openshift
       type: Docker
     triggers:
@@ -89,8 +89,8 @@ objects:
 
 parameters:
 - name: AMP_RELEASE
-  description: The destination tag of your AMP release (eg. 2.10)
-  value: '2.10' 
+  description: The destination tag of your AMP release (eg. 2.11)
+  value: '2.11' 
 - name: GIT_REPO
   description: GIT REPO
   required: true

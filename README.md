@@ -5,7 +5,7 @@
 The following pre-requisites need to be verified before proceeding with the installation.
 
 - Openshift 4.x installed and running
-- 3scale 2.10 installed and running
+- 3scale 2.11 installed and running
 
 ## Overview
 
@@ -64,7 +64,7 @@ Parameters of this policy:
    ---
 
    ```shell
-   oc -n openshift import-image apicast-gateway-rhel8:3scale2.10 --from=registry.redhat.io/3scale-amp2/apicast-gateway-rhel8:3scale2.10 --confirm
+   oc -n openshift import-image apicast-gateway-rhel8:3scale2.11 --from=registry.redhat.io/3scale-amp2/apicast-gateway-rhel8:3scale2.11 --confirm
    ```
 
 5. To install the build configs on OpenShift you can use provided template:
